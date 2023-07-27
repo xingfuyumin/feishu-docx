@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "declaration": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "jsx": "react",
+    "baseUrl": "./",
+    "resolveJsonModule": true,
+    "paths": {
+      "@@/*": [".dumi/tmp/*"],
+      "@tant/feishu-docx": ["src"],
+      "@tant/feishu-docx/*": ["src/*", "*"]
+    }
+  },
+  "include": [".dumi/**/*", ".dumirc.ts", "src/**/*"]
+}

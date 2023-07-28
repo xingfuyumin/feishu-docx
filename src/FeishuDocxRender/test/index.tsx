@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import data from './data.json';
 import FeishuDocxRender from '../index';
+import ImageRender from '../components/image';
 import { Tree } from '@tant/ui-next';
 import './index.less';
 
 
 export default () => {
-  const [id, setId] = useState('XA7Udie98ofIR5x9kdUcJEEknte');
+  const [id, setId] = useState('WFvldBMV1oreURxpAZQctorknec');
   const [treeData, setTreeData] = useState([]);
   const [map, setMap] = useState<Record<string, any[]>>({});
   const traverseTree = (ds: any[], td: any) => {
@@ -30,12 +31,13 @@ export default () => {
     setTreeData([...treeData]);
   }, [1]);
   const contents = map[id];
-  console.log(id);
+  console.log(id, contents);
   return (
     <div className="demo-container">
       <div className="demo-left">
         <Tree
           treeData={treeData}
+          defaultExpandAll
           autoExpandParent
           selectable
           selectedKeys={[id]}
@@ -48,7 +50,16 @@ export default () => {
         />
       </div>
       <div className="demo-right">
-        <FeishuDocxRender data={contents} />
+        <FeishuDocxRender
+          data={contents}
+          render={(name, data, tsx) => {
+            if (name === 'Image') {
+              data.image.base64 = `http://localhost:8000/image/${data.image.token}.png`;
+              return <ImageRender data={data} />
+            }
+            return tsx;
+          }}
+        />
       </div>
     </div>
   )

@@ -99,7 +99,7 @@ export interface Heading4 extends IBlock {
 /**
  * 五级标题 Block
  */
-export interface Heading5 extends IText {
+export interface Heading5 extends IBlock {
   block_type: 7;
   heading5: IText;
 }
@@ -419,7 +419,7 @@ export interface Table extends IBlock {
          * 从当前列索引起被合并的连续列数。
          */
         col_span?: number;
-      };
+      }[];
     }
   }
 }

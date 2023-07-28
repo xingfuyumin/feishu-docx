@@ -1,6 +1,6 @@
-import { TextElementStyle, TextStyle } from "../../traverse/index.d";
+import { TextElementStyle, TextStyle, TextElement } from "../../traverse/index.d";
 
-export const getTextStyle = (name: string, d: TextStyle) => {
+export const getTextStyle = (d: TextStyle) => {
   const obj = [];
   if (d?.align !== undefined && d?.align >= 1) {
     obj.push(`feishudocx-textstyle-align-${d.align}`);
@@ -40,4 +40,16 @@ export const getTextElementStyle = (d: TextElementStyle) => {
     obj.push('feishudocx-textelementstyle-link');
   }
   return obj;
+}
+export const formatInlinecode = (elements: TextElement[]) => {
+  elements.forEach((el, index) => {
+    if (!!el.text_run?.text_element_style?.inline_code) {
+      if (!elements[index - 1]?.text_run?.text_element_style?.inline_code) {
+        el.text_run.text_element_style.inline_code_first = true;
+      }
+      if (!elements[index + 1]?.text_run?.text_element_style?.inline_code) {
+        el.text_run.text_element_style.inline_code_last = true;
+      }
+    }
+  });
 }

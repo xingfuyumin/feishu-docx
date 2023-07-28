@@ -17,6 +17,12 @@ import Heading8Render from './components/heading8';
 import Heading9Render from './components/heading9';
 import TableRender from './components/table';
 import TableCellRender from './components/table-cell';
+import GridRender from './components/grid';
+import GridColumnRender from './components/grid-column';
+import DividerRender from './components/divider';
+import OrderedRender from './components/ordered';
+import CalloutRender from './components/callout';
+import QuoteContainerRender from './components/quote-container';
 
 type Props = {
   showDirectory?: boolean,
@@ -25,8 +31,11 @@ type Props = {
   render?: (name: string, data: any, tsx: ReactNode) => ReactNode;
   onLink?: (link: string) => void;
 }
+type Extra = {
+  order?: string; // 有序列表中的前缀
+}
 
-export const renderSwitch = (d: Block, map: Record<string, Block>, render?: Props['render'], onLink?: Props['onLink']) => {
+export const renderSwitch = (d: Block, map: Record<string, Block>, render?: Props['render'], onLink?: Props['onLink'], extra?: Extra) => {
   switch (d?.block_type) {
     case 1: return <PageRender data={d} dataMap={map} render={render} key={d.block_id} onLink={onLink} />
     case 2: return <TextRender data={d} render={render} key={d.block_id} onLink={onLink} />
@@ -40,18 +49,18 @@ export const renderSwitch = (d: Block, map: Record<string, Block>, render?: Prop
     case 10: return <Heading8Render data={d} render={render} key={d.block_id} onLink={onLink} />
     case 11: return <Heading9Render data={d} render={render} key={d.block_id} onLink={onLink} />
     case 12: return <BulletRender data={d} render={render} key={d.block_id} onLink={onLink} dataMap={map} />
-    // case 13: return <Ordered data={d} render={render} key={d.block_id} onLink={onLink} />
+    case 13: return <OrderedRender data={d} render={render} key={d.block_id} onLink={onLink} dataMap={map} {...extra} />
     // case 14: return <Code data={d} render={render} key={d.block_id} onLink={onLink} />
     // case 15: return <Quote data={d} render={render} key={d.block_id} onLink={onLink} />
     // case 17: return <Todo data={d} render={render} key={d.block_id} onLink={onLink} />
     // case 18: return <Bitable data={d} render={render} key={d.block_id} />
-    // case 19: return <Callout data={d} render={render} key={d.block_id} />
+    case 19: return <CalloutRender data={d} render={render} key={d.block_id} onLink={onLink} dataMap={map} />
     // case 20: return <ChatCard data={d} render={render} key={d.block_id} />
     // case 21: return <Diagram data={d} render={render} key={d.block_id} />
-    // case 22: return <Divider data={d} render={render} key={d.block_id} />
+    case 22: return <DividerRender data={d} render={render} key={d.block_id} />
     // case 23: return <File data={d} render={render} key={d.block_id} />
-    // case 24: return <Grid data={d} render={render} key={d.block_id} />
-    // case 25: return <GridColumn data={d} render={render} key={d.block_id} />
+    case 24: return <GridRender data={d} render={render} key={d.block_id} onLink={onLink}  dataMap={map}/>
+    case 25: return <GridColumnRender data={d} render={render} key={d.block_id} onLink={onLink}  dataMap={map}/>
     // case 26: return <Iframe data={d} render={render} key={d.block_id} />
     case 27: return <ImageRender data={d} render={render} key={d.block_id} />
     // case 28: return <ISV data={d} render={render} key={d.block_id} />
@@ -60,7 +69,7 @@ export const renderSwitch = (d: Block, map: Record<string, Block>, render?: Prop
     case 31: return <TableRender data={d} dataMap={map} render={render} key={d.block_id} onLink={onLink} />
     case 32: return <TableCellRender data={d} dataMap={map} render={render} key={d.block_id} onLink={onLink} />;
     // case 33: return <View data={d} render={render} key={d.block_id} />
-    // case 34: return <QuoteContainer data={d} render={render} key={d.block_id} />
+    case 34: return <QuoteContainerRender data={d} render={render} key={d.block_id} onLink={onLink}  dataMap={map} />
     // case 35: return <Task data={d} render={render} key={d.block_id} />
     // case 36: return <OKR data={d} render={render} key={d.block_id} />
     // case 37: return <OkrObjective data={d} render={render} key={d.block_id} />

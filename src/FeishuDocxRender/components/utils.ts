@@ -1,4 +1,4 @@
-import { TextElementStyle, TextStyle, TextElement } from "../../traverse/index.d";
+import { TextElementStyle, TextStyle, TextElement, Callout } from "../../traverse/index.d";
 
 export const getTextStyle = (d: TextStyle) => {
   const obj = [];
@@ -52,4 +52,17 @@ export const formatInlinecode = (elements: TextElement[]) => {
       }
     }
   });
+}
+export const getCalloutStyle = (d: Callout) => {
+  const obj = [];
+  if (d.callout?.background_color) {
+    obj.push(`feishudocx-calloutstyle-bgcolor-${d.callout?.background_color}`);
+  }
+  if (d.callout?.text_color) {
+    obj.push(`feishudocx-textelementstyle-textcolor-${d.callout?.text_color}`);
+  }
+  if (d.callout?.border_color) {
+    obj.push(`feishudocx-calloutstyle-bdcolor-${d.callout?.border_color}`);
+  }
+  return obj;
 }

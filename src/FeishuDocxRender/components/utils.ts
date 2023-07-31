@@ -1,9 +1,12 @@
-import { TextElementStyle, TextStyle, TextElement, Callout } from "../../traverse/index.d";
+import { TextElementStyle, TextStyle, TextElement, Callout, Ordered, Block } from "../../traverse/index.d";
 
-export const getTextStyle = (d: TextStyle) => {
+export const getTextStyle = (d: TextStyle, isCode?: boolean) => {
   const obj = [];
   if (d?.align !== undefined && d?.align >= 1) {
     obj.push(`feishudocx-textstyle-align-${d.align}`);
+  }
+  if (isCode && d?.wrap) {
+    obj.push('feishudocx-textstyle-wrap');
   }
   return obj;
 }
@@ -52,6 +55,27 @@ export const formatInlinecode = (elements: TextElement[]) => {
       }
     }
   });
+}
+export const formatOrderNum = (data?: Ordered, dataMap?: Record<string, Block>) => {
+  if (!data) {
+    return null;
+  }
+  const parentData = dataMap?.[data?.parent_id || ''];
+  if (!parentData) {
+    return null;
+  }
+  let num = 0;
+  for (const id of parentData.children || []) {
+    if (dataMap?.[id]?.block_type === 13) {
+      num += 1;
+    } else {
+      num = 0;
+    }
+    if (data?.block_id === id) {
+      break;
+    }
+  }
+  return num;
 }
 export const getCalloutStyle = (d: Callout) => {
   const obj = [];

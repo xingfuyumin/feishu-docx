@@ -7,7 +7,7 @@ import './index.less';
 
 
 export default () => {
-  const [id, setId] = useState('Fbztdzm30o6T6txyGyjcvMhjn9f');
+  const [id, setId] = useState('Xmt4d1mxcotvJUxS1A8ckpS1n9c');
   const [treeData, setTreeData] = useState([]);
   const [map, setMap] = useState<Record<string, any[]>>({});
   const traverseTree = (ds: any[], td: any) => {
@@ -31,6 +31,7 @@ export default () => {
     setTreeData([...treeData]);
   }, [1]);
   const contents = map[id];
+  console.log(id, contents);
   return (
     <div className="demo-container">
       <div className="demo-left">

@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_tant_feishu_docx=self.webpackChunk_tant_feishu_docx||[]).push([[448],{65149:function(i,n,e){e.r(n),e.d(n,{default:function(){return d}});var t=e(83466),o=e(67294),u=function(){var r=(0,t.UO)(),s=r.id,m=(0,t.WF)(),c=m.demos,f=c[s]||{},a=f.component;return a&&(0,o.createElement)(a)},d=u}}]);

@@ -23,6 +23,7 @@ import DividerRender from './components/divider';
 import OrderedRender from './components/ordered';
 import CalloutRender from './components/callout';
 import QuoteContainerRender from './components/quote-container';
+import CodeRender from './components/code';
 
 type Props = {
   showDirectory?: boolean,
@@ -50,7 +51,7 @@ export const renderSwitch = (d: Block, map: Record<string, Block>, render?: Prop
     case 11: return <Heading9Render data={d} render={render} key={d.block_id} onLink={onLink} />
     case 12: return <BulletRender data={d} render={render} key={d.block_id} onLink={onLink} dataMap={map} />
     case 13: return <OrderedRender data={d} render={render} key={d.block_id} onLink={onLink} dataMap={map} {...extra} />
-    // case 14: return <Code data={d} render={render} key={d.block_id} onLink={onLink} />
+    case 14: return <CodeRender data={d} render={render} key={d.block_id} onLink={onLink} />
     // case 15: return <Quote data={d} render={render} key={d.block_id} onLink={onLink} />
     // case 17: return <Todo data={d} render={render} key={d.block_id} onLink={onLink} />
     // case 18: return <Bitable data={d} render={render} key={d.block_id} />

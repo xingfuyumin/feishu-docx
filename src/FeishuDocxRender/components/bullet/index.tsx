@@ -29,9 +29,11 @@ export default memo((({
       )}
     >
       <span className='feishudocx-bullet-dot' >•</span>
+      <span className='feishudocx-bullet-content'>
       {
         elements.map((el, index) => <TextElement key={index} data={el} render={render} onLink={onLink} />)
       }
+      </span>
     </div>
     <div
       className={classNames(

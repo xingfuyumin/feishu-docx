@@ -54,7 +54,7 @@ export default () => {
           data={contents}
           render={(name, data, tsx) => {
             if (name === 'Image') {
-              data.image.base64 = `http://localhost:8000/image/${data.image.token}.png`;
+              data.image.base64 = `${NODE_ENV === 'production' ? '/feishu-docx/docs-dist' : ''}/image/${data.image.token}.png`;
               return <ImageRender data={data} />
             }
             return tsx;

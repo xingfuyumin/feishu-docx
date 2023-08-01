@@ -5,5 +5,8 @@ export default defineConfig({
   themeConfig: {
     name: '@tant/feishu-docx',
   },
-  publicPath: '/feishu-docx/',
+  publicPath: process.env.NODE_ENV === 'production' ? '/feishu-docx/docs-dist/' : '',
+  define: {
+    NODE_ENV: process.env.NODE_ENV,
+  },
 });

@@ -70,7 +70,6 @@
     "stylelint": "^14.9.1"
   },
   "dependencies": {
-    "@tant/ui-next": "^2.51.11",
-    "react-ace": "^10.1.0"
+    "@tant/ui-next": "^2.51.11"
   }
 }

@@ -1194,4 +1194,41 @@ export interface Link {
 export type Block = Page | Text | Heading1 | Heading2 | Heading3 | Heading4 | Heading5 | Heading6 | Heading7 | Heading8 | Heading9 |
 Bullet | Ordered | Code | Quote | Todo | Bitable | Callout | ChatCard | Diagram | Divider | File | Grid | GridColumn |
 Iframe | Image | ISV | Mindnote | Sheet | Table | TableCell | View | Undefined | QuoteContainer | Task | OKR |
-OkrObjective | OkrKeyResult | OkrProgress | AddOns | JiraIssue;
+OkrObjective | OkrKeyResult | OkrProgress | AddOns | JiraIssue |
+TipBlock | DangerBlock | WarningBlock | TabsBlock | TabPaneBlock;
+
+/**
+ * 自定义语法：普通提示 Block
+ */
+export interface TipBlock extends IBlock {
+  block_type: -1;
+  text: IText;
+}
+/**
+ * 自定义语法：危险提示 Block
+ */
+export interface DangerBlock extends IBlock {
+  block_type: -2;
+  text: IText;
+}
+/**
+ * 自定义语法：警告提示 Block
+ */
+export interface WarningBlock extends IBlock {
+  block_type: -3;
+  text: IText;
+}
+/**
+ * 自定义语法：标签页 Block
+ */
+export interface TabsBlock extends IBlock {
+  block_type: -4;
+  text: IText;
+}
+/**
+ * 自定义语法：标签页子页面 Block
+ */
+export interface TabPaneBlock extends IBlock {
+  block_type: -5;
+  text: IText;
+}

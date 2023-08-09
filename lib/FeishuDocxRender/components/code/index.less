@@ -1,0 +1,37 @@
+.feishudocx-code {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid rgb(222, 224, 227);
+  background-color: rgb(245, 246, 247);
+  overflow: auto;
+  padding: 24px 20px;
+  .feishudocx-code-line {
+    white-space: pre;
+    width: fit-content;
+    &::before {
+      width: 46px;
+      margin-right: 11px;
+      display: inline-block;
+      text-align: right;
+      content: attr(data-line-num);
+      color: rgb(100, 106, 115);
+    }
+  }
+}
+.feishudocx-textstyle-wrap {
+  .feishudocx-code-line {
+    display: flex;
+    word-break: break-all;
+    white-space: pre-wrap;
+    width: 100%;
+  }
+  .feishudocx-textelement {
+    flex-grow: 1;
+    width: 0;
+  }
+}
+.feishudocx-code::-webkit-scrollbar-track {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  background-color: transparent;
+}

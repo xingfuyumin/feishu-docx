@@ -1,4 +1,4 @@
-import { TextElementStyle, TextStyle, TextElement, Callout, Ordered, Block } from "../../traverse/index.d";
+import { TextElementStyle, TextStyle, TextElement, Callout, Ordered } from "../../traverse/index.d";
 
 export const getTextStyle = (d: TextStyle, isCode?: boolean) => {
   const obj = [];
@@ -56,22 +56,21 @@ export const formatInlinecode = (elements: TextElement[]) => {
     }
   });
 }
-export const formatOrderNum = (data?: Ordered, dataMap?: Record<string, Block>) => {
+export const formatOrderNum = (data?: Ordered) => {
   if (!data) {
     return null;
   }
-  const parentData = dataMap?.[data?.parent_id || ''];
-  if (!parentData) {
+  if (!data.parentNode) {
     return null;
   }
   let num = 0;
-  for (const id of parentData.children || []) {
-    if (dataMap?.[id]?.block_type === 13) {
+  for (const d of data.parentNode.childrenNodes || []) {
+    if (d?.block_type === 13) {
       num += 1;
     } else {
       num = 0;
     }
-    if (data?.block_id === id) {
+    if (data?.block_id === d?.block_id) {
       break;
     }
   }

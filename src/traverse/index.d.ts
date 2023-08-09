@@ -41,6 +41,16 @@ export interface IBlock {
    * 评论 ID 列表。查询评论内容请阅览https://open.feishu.cn/document/server-docs/docs/CommentAPI/get
    */
   comment_ids?: string[];
+
+  /**
+   * 子Block列表（本地生成）
+   */
+  childrenNodes?: Block[];
+
+  /**
+   * 父Block列表（本地生成）
+   */
+  parentNode?: Block;
 }
 
 export interface IText {
@@ -391,6 +401,10 @@ export interface Table extends IBlock {
      * 单元格数组，数组元素为 Table Cell Block 的 ID。
      */
     cells?: string[];
+    /**
+     * 单元格Block对象（本地生成）
+     */
+    cellNodes?: Block[];
     /**
      * 表格属性。
      */

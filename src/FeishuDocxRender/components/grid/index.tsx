@@ -9,11 +9,11 @@ type Props = {
   allData?: Block[];
   render?: (name: string, data: any, tsx: ReactNode) => ReactNode;
   onLink?: (link: string) => void;
-  dataMap?: Record<string, Block>;
+  
 }
 
 export default memo((({
-  data, render, onLink, dataMap = {},
+  data, render, onLink,
 }) => {
   const cols = new Array(data?.grid?.column_size || 2).fill('');
   const tsx = data ? (
@@ -24,7 +24,7 @@ export default memo((({
         'feishudocx-grid',
       )}
     >
-      {cols.map((col, colIndex) => renderSwitch(dataMap[data.children?.[colIndex] || ''], dataMap, render, onLink))}
+      {cols.map((col, colIndex) => renderSwitch(data.childrenNodes?.[colIndex] as any, render, onLink))}
     </div>
   ) : null;
   return render ? render('Grid', data, tsx) || null : tsx;

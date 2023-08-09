@@ -9,14 +9,14 @@ type Props = {
   allData?: Block[];
   render?: (name: string, data: any, tsx: ReactNode) => ReactNode;
   onLink?: (link: string) => void;
-  dataMap?: Record<string, Block>;
+  
 }
 
 export default memo((({
-  data, render, onLink, dataMap = {},
+  data, render, onLink,
 }) => {
   const property = data?.table?.property || { column_size: 0, row_size: 0, column_width: [], merge_info: [] };
-  const cells = data?.table?.cells || [];
+  const cellNodes = data?.table?.cellNodes || [];
   const rowLen = property?.row_size || 0;
   const colLen = property?.column_size || 0;
   const rows = new Array(rowLen).fill('');
@@ -58,7 +58,7 @@ export default memo((({
                   return (
                     <td key={colIndex} rowSpan={rowSpan} colSpan={colSpan}>
                     {
-                      renderSwitch(dataMap[cells[index]], dataMap, render, onLink)
+                      renderSwitch(cellNodes[index], render, onLink)
                     }
                   </td>
                   );

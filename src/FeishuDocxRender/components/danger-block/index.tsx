@@ -1,5 +1,5 @@
 import React, { FC, ReactNode, memo } from 'react';
-import { DangerBlock, Block } from "../../../traverse/index.d";
+import { DangerBlock } from "../../../traverse/index.d";
 import classNames from 'classnames';
 import './index.less';
 import { renderSwitch } from '../..';
@@ -8,11 +8,11 @@ type Props = {
   data?: DangerBlock;
   render?: (name: string, data: any, tsx: ReactNode) => ReactNode;
   onLink?: (link: string) => void;
-  dataMap?: Record<string, Block>;
+  
 }
 
 export default memo((({
-  data, render, onLink, dataMap = {},
+  data, render, onLink,
 }) => {
   const tsx = data ? (
     <div
@@ -23,7 +23,7 @@ export default memo((({
       )}
     >
       <div className="feishudocx-dangerblock-title">{data?.text?.elements?.[0]?.text_run?.content}</div>
-      {data?.children?.map(d => renderSwitch(dataMap[d], dataMap, render, onLink))}
+      {data?.childrenNodes?.map(d => renderSwitch(d, render, onLink))}
     </div>
   ) : null;
   return render ? render('DangerBlock', data, tsx) || null : tsx;

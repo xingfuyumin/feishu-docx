@@ -1,5 +1,5 @@
 import React, { FC, ReactNode, memo } from 'react';
-import { Page, Block } from "../../../traverse/index.d";
+import { Page } from "../../../traverse/index.d";
 import classNames from 'classnames';
 import TextElement from '../text-element';
 import { formatInlinecode, getTextStyle } from '../utils';
@@ -10,11 +10,11 @@ type Props = {
   data?: Page;
   render?: (name: string, data: any, tsx: ReactNode) => ReactNode;
   onLink?: (link: string) => void;
-  dataMap?: Record<string, Block>;
+  
 }
 
 export default memo((({
-  data, render, onLink, dataMap = {},
+  data, render, onLink,
 }) => {
   const elements = data?.page?.elements || [];
   formatInlinecode(elements);
@@ -34,7 +34,7 @@ export default memo((({
   ) : null;
   tsx = <>
     {tsx}
-    {data?.children?.map(d => renderSwitch(dataMap[d], dataMap, render, onLink))}
+    {data?.childrenNodes?.map(d => renderSwitch(d, render, onLink))}
   </>
   return render ? render('Page', data, tsx) || null : tsx;
 }) as FC<Props>)

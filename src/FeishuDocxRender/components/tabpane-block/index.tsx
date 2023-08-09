@@ -1,5 +1,5 @@
 import React, { FC, ReactNode, memo } from 'react';
-import { TabPaneBlock, Block } from "../../../traverse/index.d";
+import { TabPaneBlock } from "../../../traverse/index.d";
 import classNames from 'classnames';
 import './index.less';
 import { renderSwitch } from '../..';
@@ -8,11 +8,11 @@ type Props = {
   data?: TabPaneBlock;
   render?: (name: string, data: any, tsx: ReactNode) => ReactNode;
   onLink?: (link: string) => void;
-  dataMap?: Record<string, Block>;
+  
 }
 
 export default memo((({
-  data, render, onLink, dataMap = {},
+  data, render, onLink,
 }) => {
   const tsx = data ? (
     <div
@@ -22,7 +22,7 @@ export default memo((({
         'feishudocx-tabpaneblock',
       )}
     >
-      {data?.children?.map(d => renderSwitch(dataMap[d], dataMap, render, onLink))}
+      {data?.childrenNodes?.map(d => renderSwitch(d, render, onLink))}
     </div>
   ) : null;
   return render ? render('TabPaneBlock', data, tsx) || null : tsx;

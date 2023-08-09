@@ -1,5 +1,5 @@
 import React, { FC, ReactNode, memo } from 'react';
-import { QuoteContainer, Block } from "../../../traverse/index.d";
+import { QuoteContainer } from "../../../traverse/index.d";
 import classNames from 'classnames';
 import './index.less';
 import { renderSwitch } from '../..';
@@ -8,11 +8,11 @@ type Props = {
   data?: QuoteContainer;
   render?: (name: string, data: any, tsx: ReactNode) => ReactNode;
   onLink?: (link: string) => void;
-  dataMap?: Record<string, Block>;
+  
 }
 
 export default memo((({
-  data, render, onLink, dataMap = {}
+  data, render, onLink,
 }) => {
   let tsx = data ? (
     <>
@@ -23,7 +23,7 @@ export default memo((({
         'feishudocx-quotecontainer',
       )}
     >
-      {data?.children?.map(d => renderSwitch(dataMap[d], dataMap, render, onLink))}
+      {data?.childrenNodes?.map(d => renderSwitch(d, render, onLink))}
     </div>
     </>
   ) : null;

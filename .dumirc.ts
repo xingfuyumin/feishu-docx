@@ -9,4 +9,7 @@ export default defineConfig({
   define: {
     NODE_ENV: process.env.NODE_ENV,
   },
+  history: {
+    type: 'hash',
+  }
 });

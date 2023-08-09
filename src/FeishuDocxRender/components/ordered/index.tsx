@@ -1,5 +1,5 @@
 import React, { FC, ReactNode, memo } from 'react';
-import { Ordered, Block } from "../../../traverse/index.d";
+import { Ordered } from "../../../traverse/index.d";
 import classNames from 'classnames';
 import TextElement from '../text-element';
 import { formatInlinecode, formatOrderNum, getTextStyle } from '../utils';
@@ -10,18 +10,18 @@ type Props = {
   data?: Ordered;
   render?: (name: string, data: any, tsx: ReactNode) => ReactNode;
   onLink?: (link: string) => void;
-  dataMap?: Record<string, Block>;
+  
   order?: string;
 }
 
 export default memo((({
-  data, render, onLink, dataMap = {}, order = '',
+  data, render, onLink, order = '',
 }) => {
   const elements = data?.ordered?.elements || [];
   formatInlinecode(elements);
   let finalOrder = String(order);
   if (!order) {
-    finalOrder = String(formatOrderNum(data, dataMap));
+    finalOrder = String(formatOrderNum(data));
   }
   let tsx = data ? (
     <>
@@ -45,7 +45,7 @@ export default memo((({
           'feishudocx-ordered-children',
         )}
       >
-        {data?.children?.map((d, index) => renderSwitch(dataMap[d], dataMap, render, onLink, { order: `${finalOrder}.${index + 1}` }))}
+        {data?.childrenNodes?.map((d, index) => renderSwitch(d, render, onLink, { order: `${finalOrder}.${index + 1}` }))}
       </div>
     </>
   ) : null;

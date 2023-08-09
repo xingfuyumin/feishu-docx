@@ -1,5 +1,5 @@
 import React, { FC, ReactNode, memo } from 'react';
-import { TabsBlock, Block, TabPaneBlock } from "../../../traverse/index.d";
+import { TabsBlock, TabPaneBlock } from "../../../traverse/index.d";
 import classNames from 'classnames';
 import './index.less';
 import { renderSwitch } from '../..';
@@ -9,11 +9,11 @@ type Props = {
   data?: TabsBlock;
   render?: (name: string, data: any, tsx: ReactNode) => ReactNode;
   onLink?: (link: string) => void;
-  dataMap?: Record<string, Block>;
+  
 }
 
 export default memo((({
-  data, render, onLink, dataMap = {},
+  data, render, onLink,
 }) => {
   const tsx = data ? (
     <div
@@ -25,11 +25,11 @@ export default memo((({
     >
       <Tabs
         items={
-          data?.children?.map(d => {
+          data?.childrenNodes?.map(d => {
             return ({
-              key: d,
-              label: (dataMap[d] as unknown as TabPaneBlock)?.text?.elements?.[0]?.text_run?.content || '',
-              children: renderSwitch(dataMap[d], dataMap, render, onLink),
+              key: d?.block_id,
+              label: (d as unknown as TabPaneBlock)?.text?.elements?.[0]?.text_run?.content || '',
+              children: renderSwitch(d, render, onLink),
             });
           })
         }

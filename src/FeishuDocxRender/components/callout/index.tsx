@@ -1,5 +1,5 @@
 import React, { FC, ReactNode, memo } from 'react';
-import { Callout, Block } from "../../../traverse/index.d";
+import { Callout } from "../../../traverse/index.d";
 import classNames from 'classnames';
 import { getCalloutStyle } from '../utils';
 import './index.less';
@@ -10,11 +10,10 @@ type Props = {
   data?: Callout;
   render?: (name: string, data: any, tsx: ReactNode) => ReactNode;
   onLink?: (link: string) => void;
-  dataMap?: Record<string, Block>;
 }
 
 export default memo((({
-  data, render, onLink, dataMap = {},
+  data, render, onLink,
 }) => {
   let tsx = data ? (
     <div
@@ -30,7 +29,7 @@ export default memo((({
       </div>
       <div className="feishudocx-callout-content">
         {
-          data?.children?.map(d => renderSwitch(dataMap[d], dataMap, render, onLink))
+          data?.childrenNodes?.map(d => renderSwitch(d, render, onLink))
         }
       </div>
     </div>

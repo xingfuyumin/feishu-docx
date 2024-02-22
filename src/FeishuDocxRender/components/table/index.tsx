@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, memo } from 'react';
+import React, { FC, ReactNode, memo, useMemo } from 'react';
 import { Table, Block } from "../../../traverse/index.d";
 import classNames from 'classnames';
 import './index.less';
@@ -12,7 +12,7 @@ type Props = {
   
 }
 
-export default memo((({
+const Index: FC<Props> = ({
   data, render, onLink,
 }) => {
   const property = data?.table?.property || { column_size: 0, row_size: 0, column_width: [], merge_info: [] };
@@ -21,7 +21,27 @@ export default memo((({
   const colLen = property?.column_size || 0;
   const rows = new Array(rowLen).fill('');
   const cols = new Array(colLen).fill('');
-  const ignoreIndex: Record<string, boolean> = {};
+  const ignoreArr = useMemo(() => {
+    const arr: number[][] = [];
+    rows.forEach((row, rowIndex) => {
+      cols.forEach((col, colIndex) => {
+        const index = rowIndex * colLen + colIndex;
+        const rowSpan = property.merge_info?.[index]?.row_span || 1;
+        const colSpan = property.merge_info?.[index]?.col_span || 1;
+        if (rowSpan > 1 || colSpan > 1) {
+          const d = [rowIndex, colIndex, rowIndex, colIndex];
+          if (rowSpan > 1) {
+            d[2] = rowIndex + rowSpan - 1;
+          }
+          if (colSpan > 1) {
+            d[3] = colIndex + colSpan - 1;
+          }
+          arr.push(d);
+        }
+      });
+    });
+    return arr;
+  }, [rowLen, colLen]);
   const tsx = data ? (
     <div
       key={data.block_id}
@@ -44,15 +64,8 @@ export default memo((({
                   const index = rowIndex * colLen + colIndex;
                   const rowSpan = property.merge_info?.[index]?.row_span || 1;
                   const colSpan = property.merge_info?.[index]?.col_span || 1;
-                  if (rowSpan > 1) {
-                    for (let x = colIndex; x < colIndex + colSpan; x += 1) {
-                      for (let y = rowIndex; y < rowIndex + rowSpan; y += 1) {
-                        ignoreIndex[`${x}-${y}`] = true;
-                      }
-                    }
-                    delete ignoreIndex[`${colIndex}-${rowIndex}`]; // 第一个是本身需要去掉
-                  }
-                  if (ignoreIndex[`${colIndex}-${rowIndex}`]) {
+                  
+                  if (ignoreArr.find(d => ((rowIndex > d[0] && rowIndex <= d[2] && colIndex >= d[1] && colIndex <= d[3]) ) || (colIndex > d[1] && colIndex <= d[3] && rowIndex >= d[0] && rowIndex <= d[2]))) {
                     return null;
                   }
                   return (
@@ -71,4 +84,6 @@ export default memo((({
     </div>
   ) : null;
   return render ? render('Table', data, tsx) || null : tsx;
-}) as FC<Props>)
+}
+
+export default memo(Index);

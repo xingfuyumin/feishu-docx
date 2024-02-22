@@ -1,6 +1,6 @@
 {
   "name": "@tant/feishu-docx",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "自定义飞书文档可视化组件",
   "module": "dist/index.js",
   "scripts": {

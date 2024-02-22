@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react';
-import { Image } from "../../../traverse/index.d";
+import { Image as Img } from "../../../traverse/index.d";
 import './index.less';
 type Props = {
-    data?: Image;
+    data?: Img;
     render?: (name: string, data: any, tsx: ReactNode) => ReactNode;
 };
 declare const _default: React.NamedExoticComponent<Props>;

@@ -67,6 +67,8 @@ export const formatOrderNum = (data?: Ordered) => {
   for (const d of data.parentNode.childrenNodes || []) {
     if (d?.block_type === 13) {
       num += 1;
+    } else if (d?.block_type === 2 && d?.text.elements[0].text_run?.content.includes("  ")){
+      continue;
     } else {
       num = 0;
     }

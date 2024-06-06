@@ -4,3 +4,4 @@ export declare const getTextElementStyle: (d: TextElementStyle) => string[];
 export declare const formatInlinecode: (elements: TextElement[]) => void;
 export declare const formatOrderNum: (data?: Ordered) => number | null;
 export declare const getCalloutStyle: (d: Callout) => string[];
+//# sourceMappingURL=utils.d.ts.map

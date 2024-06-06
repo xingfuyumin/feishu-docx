@@ -1,8 +1,21 @@
 .feishudocx-table {
+  overflow: auto;
   table {
+    display: block;
+    overflow-x: auto;
+    width: 100%;
     tr {
+      &:nth-child(2n){
+        background: #f6f8fa;
+      }
       &:nth-child(2) {
+        background: #fff;
         border-top: 1px solid rgb(222, 224, 227);
+        td {
+          .feishudocx-text {
+            text-align: center;
+          }
+        }
       }
       td {
         padding: 8px;

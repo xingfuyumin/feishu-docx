@@ -15,3 +15,4 @@ type Extra = {
 export declare const renderSwitch: (d: Block, render?: Props['render'], onLink?: Props['onLink'], extra?: Extra) => React.JSX.Element | null;
 declare const _default: React.NamedExoticComponent<Props>;
 export default _default;
+//# sourceMappingURL=index.d.ts.map

@@ -786,7 +786,6 @@ export interface TextRun {
    * 文本局部样式
    */
   text_element_style?: TextElementStyle;
-
 }
 export interface MentionUser {
   /**

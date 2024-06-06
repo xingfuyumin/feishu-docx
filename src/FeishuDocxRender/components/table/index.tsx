@@ -1,26 +1,29 @@
-import React, { FC, ReactNode, memo, useMemo } from 'react';
-import { Table, Block } from "../../../traverse/index.d";
 import classNames from 'classnames';
-import './index.less';
+import React, { FC, ReactNode, memo, useMemo } from 'react';
 import { renderSwitch } from '../..';
+import { Block, Table } from '../../../traverse/index.d';
+import './index.less';
 
 type Props = {
   data?: Table;
   allData?: Block[];
   render?: (name: string, data: any, tsx: ReactNode) => ReactNode;
   onLink?: (link: string) => void;
-  
-}
+};
 
-const Index: FC<Props> = ({
-  data, render, onLink,
-}) => {
-  const property = data?.table?.property || { column_size: 0, row_size: 0, column_width: [], merge_info: [] };
+const Index: FC<Props> = ({ data, render, onLink }) => {
+  const property = data?.table?.property || {
+    column_size: 0,
+    row_size: 0,
+    column_width: [],
+    merge_info: [],
+  };
   const cellNodes = data?.table?.cellNodes || [];
   const rowLen = property?.row_size || 0;
   const colLen = property?.column_size || 0;
   const rows = new Array(rowLen).fill('');
   const cols = new Array(colLen).fill('');
+
   const ignoreArr = useMemo(() => {
     const arr: number[][] = [];
     rows.forEach((row, rowIndex) => {
@@ -42,48 +45,71 @@ const Index: FC<Props> = ({
     });
     return arr;
   }, [rowLen, colLen]);
+
   const tsx = data ? (
     <div
       key={data.block_id}
       id={data.block_id}
-      className={classNames(
-        'feishudocx-table',
-      )}
+      className={classNames('feishudocx-table')}
     >
       <table>
         <colgroup>
-          {
-            cols.map((col, colIndex) => <col key={colIndex} width={property?.column_width?.[colIndex]} />)
-          }
+          {cols.map((col, colIndex) => (
+            <col key={colIndex} width={property?.column_width?.[colIndex]} />
+          ))}
         </colgroup>
-        {
-          rows.map((row, rowIndex) => (
-            <tr key={rowIndex}>
-              {
-                cols.map((col, colIndex) => {
-                  const index = rowIndex * colLen + colIndex;
-                  const rowSpan = property.merge_info?.[index]?.row_span || 1;
-                  const colSpan = property.merge_info?.[index]?.col_span || 1;
-                  
-                  if (ignoreArr.find(d => ((rowIndex > d[0] && rowIndex <= d[2] && colIndex >= d[1] && colIndex <= d[3]) ) || (colIndex > d[1] && colIndex <= d[3] && rowIndex >= d[0] && rowIndex <= d[2]))) {
-                    return null;
-                  }
-                  return (
-                    <td key={colIndex} rowSpan={rowSpan} colSpan={colSpan}>
-                    {
-                      renderSwitch(cellNodes[index], render, onLink)
-                    }
-                  </td>
-                  );
-                })
+        {rows.map((row, rowIndex) => (
+          <tr key={rowIndex}>
+            {cols.map((col, colIndex) => {
+              const index = rowIndex * colLen + colIndex;
+              const rowSpan = property.merge_info?.[index]?.row_span || 1;
+              const colSpan = property.merge_info?.[index]?.col_span || 1;
+              let cellData = cellNodes[index] as any;
+
+              if (
+                ignoreArr.find(
+                  (d) =>
+                    (rowIndex > d[0] &&
+                      rowIndex <= d[2] &&
+                      colIndex >= d[1] &&
+                      colIndex <= d[3]) ||
+                    (colIndex > d[1] &&
+                      colIndex <= d[3] &&
+                      rowIndex >= d[0] &&
+                      rowIndex <= d[2]),
+                )
+              ) {
+                return null;
               }
-            </tr>
-          ))
-        }
+              if (
+                cellData &&
+                cellData.childrenNodes &&
+                cellData.childrenNodes[0] &&
+                cellData.childrenNodes[0].text &&
+                cellData.childrenNodes[0].text.elements &&
+                cellData.childrenNodes[0].text.elements[0] &&
+                cellData.childrenNodes[0].text.elements[0].text_run
+              ) {
+                cellData.childrenNodes[0].text.elements[0].text_run.tableCellInfo =
+                  {
+                    colIndex,
+                    rowIndex,
+                    apiColIndex: 0,//默认第一列是参数
+                  };
+              }
+              return (
+                <td key={colIndex} rowSpan={rowSpan} colSpan={colSpan}>
+                  {renderSwitch(cellData, render, onLink)}
+                </td>
+              );
+            })}
+          </tr>
+        ))}
       </table>
     </div>
   ) : null;
+
   return render ? render('Table', data, tsx) || null : tsx;
-}
+};
 
 export default memo(Index);

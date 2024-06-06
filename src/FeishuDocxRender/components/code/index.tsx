@@ -1,15 +1,16 @@
-import React, { FC, ReactNode, memo } from 'react';
-import { Code } from "../../../traverse/index.d";
 import classNames from 'classnames';
-import './index.less';
-import { formatInlinecode, getTextStyle } from '../utils';
+import React, { FC, ReactNode, memo } from 'react';
+import { Code } from '../../../traverse/index.d';
 import TextElement from '../text-element';
+import { formatInlinecode, getTextStyle } from '../utils';
+import CodeBlock from './code-block';
+import './index.less';
 
 type Props = {
   data?: Code;
   render?: (name: string, data: any, tsx: ReactNode) => ReactNode;
   onLink?: (link: string) => void;
-}
+};
 
 export const CODE_TYPE = [
   'plaintext',
@@ -86,14 +87,16 @@ export const CODE_TYPE = [
   'opengl shading language',
   'properties',
   'solidity',
-  'toml'
+  'toml',
 ];
 
-export default memo((({
-  data, render, onLink,
-}) => {
+export default memo((({ data, render, onLink }) => {
   const elements = data?.code?.elements || [];
   formatInlinecode(elements);
+  let codeString = ''
+  elements.forEach(el=>{
+    codeString += `${el?.text_run?.content}`
+  })
   const tsx = data ? (
     <div
       key={data.block_id}
@@ -103,12 +106,17 @@ export default memo((({
         ...getTextStyle(data.code.style, true),
       )}
     >
-      {
-        elements.map((el, index) => <div data-line-num={index + 1} key={index} className="feishudocx-code-line">
+      <CodeBlock language="javascript" code={codeString} />
+      {/* {elements.map((el, index) => (
+        <div
+          data-line-num={index + 1}
+          key={index}
+          className="feishudocx-code-line"
+        >
           <TextElement data={el} render={render} onLink={onLink} />
-        </div>)
-      }
+        </div>
+      ))} */}
     </div>
   ) : null;
   return render ? render('Code', data, tsx) || null : tsx;
-}) as FC<Props>)
+}) as FC<Props>);

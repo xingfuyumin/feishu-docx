@@ -16,6 +16,7 @@ export default memo((({
   data, render, onLink,
 }) => {
   const elements = data?.bullet?.elements || [];
+  console.log(222,elements)
   formatInlinecode(elements);
   let tsx = data ? (
     <>

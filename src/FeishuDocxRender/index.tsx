@@ -93,7 +93,6 @@ export const renderSwitch = (d: Block, render?: Props['render'], onLink?: Props[
     default: return null;
   };
 }
-
 const Index: FC<Props> = ({
   data = [], render, onLink,
 }) => {

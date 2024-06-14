@@ -16,8 +16,9 @@ const CodeBlock = ({ language, code }) => {
 
     return (
         <div className="code-block-wrap">
+            {/* <span>{language}</span> */}
             <span className="copy" onClick={handleCopy}>{txt}</span>
-            <SyntaxHighlighter language={language} style={materialLight}>
+            <SyntaxHighlighter language={language} style={materialLight} showLineNumbers>
                 {code}
             </SyntaxHighlighter>
         </div>

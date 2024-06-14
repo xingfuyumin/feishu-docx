@@ -18,6 +18,7 @@ export default memo((({
 }) => {
   const elements = data?.page?.elements || [];
   formatInlinecode(elements);
+  console.log(111,data)
   let tsx = data ? (
     <div
       key={data.block_id}

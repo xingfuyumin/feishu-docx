@@ -45,7 +45,6 @@ export default memo((({ data, render, onLink = () => {} }) => {
         ...getTextElementStyle(data?.text_element_style || {}),
       )}
       onClick={() => {
-        console.log(data.text_element_style)
         if (data.text_element_style?.link?.url) {
           onLink(decodeURIComponent(data.text_element_style?.link?.url));
         }

@@ -24,6 +24,13 @@ const Index: FC<Props> = ({ data, render, onLink }) => {
   const rows = new Array(rowLen).fill('');
   const cols = new Array(colLen).fill('');
 
+  // 表格里的api需要缩进处理的会有专门标识“$$”,参见各个模型api
+  const needApiIndent = cellNodes.some((cell:any)=>{
+    const d = cell?.childrenNodes?.[0]?.text?.elements?.[0]?.text_run?.content||''
+    return d.indexOf('$$')!==-1
+  })
+
+
   const ignoreArr = useMemo(() => {
     const arr: number[][] = [];
     rows.forEach((row, rowIndex) => {
@@ -94,7 +101,8 @@ const Index: FC<Props> = ({ data, render, onLink }) => {
                   {
                     colIndex,
                     rowIndex,
-                    apiColIndex: 0,//默认第一列是参数
+                    apiColIndex: 0, //默认第一列是参数
+                    needApiIndent
                   };
               }
               return (

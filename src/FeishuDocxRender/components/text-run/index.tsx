@@ -17,7 +17,7 @@ export default memo((({ data, render, onLink = () => {} }) => {
       return <span>{data.content}</span>;
     }
 
-    const { colIndex, apiColIndex, rowIndex } = data.tableCellInfo;
+    const { colIndex, apiColIndex, rowIndex,needApiIndent } = data.tableCellInfo;
     if (colIndex !== apiColIndex) {
       return <span>{data.content}</span>;
     }
@@ -26,7 +26,7 @@ export default memo((({ data, render, onLink = () => {} }) => {
       return <span>{data.content.replace('$$', '')}</span>;
     }
 
-    if (rowIndex > 1) {
+    if (rowIndex > 1&&needApiIndent) {
       const values = data.content
         .split('.')
         .map((v: string) => v.replace(/\s+/g, ''));
